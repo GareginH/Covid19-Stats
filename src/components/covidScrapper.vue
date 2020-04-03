@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="shadow">
       <h1>COVID-19 PANDEMIC</h1>
-      <div class="flex" v-if="this.prepareData() != null">
+      <div class="flex" v-if="this.prepareDataCases(4) != null">
         <div>
           <h2>Most new deaths in</h2>
           <chart :dataset="this.prepareDataCases(4)" />
