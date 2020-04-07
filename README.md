@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://github.com/GareginH/Covid19-Stats)
 
+![Covid19-Stats](https://github.com/GareginH/Covid19-Stats/raw/Images/covid-19-1.png)
+![Covid19-Stats](https://github.com/GareginH/Covid19-Stats/raw/Images/covid-19-2.png)
+![Covid19-Stats](https://github.com/GareginH/Covid19-Stats/raw/Images/covid-19-3.png)
+
 Covid19-Stats:
 
 - Scrapes data online
