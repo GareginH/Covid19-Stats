@@ -127,23 +127,23 @@ export default {
       try {
         return {
           labels: [
-            list[1][0],
             list[2][0],
             list[3][0],
             list[4][0],
             list[5][0],
-            list[6][0]
+            list[6][0],
+            list[7][0]
           ],
           datasets: [
             {
               backgroundColor: background,
               data: [
-                list[1][type],
                 list[2][type],
                 list[3][type],
                 list[4][type],
                 list[5][type],
-                list[6][type]
+                list[6][type],
+                list[7][type]
               ]
             }
           ]
@@ -186,7 +186,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .main-card {
   border-radius: 10px;
