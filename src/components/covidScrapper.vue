@@ -2,23 +2,29 @@
   <div class="wrap">
     <div class="shadow">
       <h1>COVID-19 PANDEMIC</h1>
-      <div class="flex" v-if="this.prepareDataCases(4) != null">
+      <div class="flex" v-if="this.info.length > 2">
         <div>
           <h2>Most new deaths in</h2>
-          <chart :dataset="this.prepareDataCases(4)" />
+          <chart :dataset="prepareDataCases(4)" />
         </div>
         <div>
           <h2>Most new cases in</h2>
-          <chart :dataset="this.prepareDataCases(2)" />
+          <chart :dataset="prepareDataCases(2)" />
         </div>
         <div>
           <h2>Most critical cases in</h2>
-          <chart :dataset="this.prepareDataCases(7)" />
+          <chart :dataset="prepareDataCases(7)" />
         </div>
+      </div>
+      <div v-else style="margin-top:50px">
+        <spinner
+          size="massive"
+          message="Loading data, please wait..."
+        ></spinner>
       </div>
     </div>
 
-    <div class="main-card">
+    <div class="main-card" v-if="this.info.length > 2">
       <input
         class="search-field"
         type="text"
@@ -65,6 +71,7 @@
 import axios from "axios";
 import cheerio from "cheerio";
 import chart from "./chart";
+import Spinner from "vue-simple-spinner";
 export default {
   name: "covidScrapper",
   data() {
@@ -78,7 +85,8 @@ export default {
     };
   },
   components: {
-    chart
+    chart,
+    Spinner
   },
   created() {
     this.info = this.makeDataExportable();
@@ -92,65 +100,57 @@ export default {
     },
     prepareDataCases(type) {
       let list = [];
-      let background = [];
+      let background = [
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`,
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`,
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`,
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`,
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`,
+        `rgba(${Math.floor(Math.random() * 255 + 1)}, ${Math.floor(
+          Math.random() * 255 + 1
+        )}, ${Math.floor(Math.random() * 255 + 1)}, 1)`
+      ];
       if (type === 4) {
         list = this.info.slice().sort((a, b) => b[4] - a[4]);
-        background = [
-          "rgba(102, 0, 204, 1)",
-          "rgba(40, 232, 135, 1)",
-          "rgba(255, 106, 186, 1)",
-          "rgba(175, 92, 192, 1)",
-          "rgba(223, 12, 20, 1)",
-          "rgba(23, 212, 155, 1)"
-        ];
       } else if (type === 7) {
         list = this.info.slice().sort((a, b) => b[7] - a[7]);
-        background = [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 126, 26, 1)",
-          "rgba(215, 92, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(123, 112, 155, 1)"
-        ];
       } else if (type === 2) {
         list = this.info.slice().sort((a, b) => b[2] - a[2]);
-        background = [
-          "rgba(155, 99, 232, 1)",
-          "rgba(54, 162, 0, 1)",
-          "rgba(50, 206, 86, 1)",
-          "rgba(75, 90, 192, 1)",
-          "rgba(123, 102, 155, 1)",
-          "rgba(123, 0, 155, 1)"
-        ];
       }
-      try {
-        return {
-          labels: [
-            list[2][0],
-            list[3][0],
-            list[4][0],
-            list[5][0],
-            list[6][0],
-            list[7][0]
-          ],
-          datasets: [
-            {
-              backgroundColor: background,
-              data: [
-                list[2][type],
-                list[3][type],
-                list[4][type],
-                list[5][type],
-                list[6][type],
-                list[7][type]
-              ]
-            }
-          ]
-        };
-      } catch (e) {
-        console.log(e);
-      }
+      return {
+        labels: [
+          list[2][0],
+          list[3][0],
+          list[4][0],
+          list[5][0],
+          list[6][0],
+          list[7][0]
+        ],
+        datasets: [
+          {
+            backgroundColor: background,
+            hoverBorderColor: "rgba(0, 0, 0, 0.5)",
+            data: [
+              list[2][type],
+              list[3][type],
+              list[4][type],
+              list[5][type],
+              list[6][type],
+              list[7][type]
+            ]
+          }
+        ]
+      };
     },
     async getSite(site) {
       return new Promise((resolve, reject) => {
@@ -235,7 +235,7 @@ export default {
   z-index: 100;
   background: white;
   width: 100%;
-  height: 800px;
+  height: 780px;
 }
 h1 {
   margin: 0;

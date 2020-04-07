@@ -30,6 +30,6 @@ export default {
 
 <style>
 .small {
-  max-width: 300px;
+  max-width: 310px;
 }
 </style>
