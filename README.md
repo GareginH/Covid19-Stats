@@ -8,23 +8,24 @@ Covid19-Stats:
 - Shows Graphs
 - Shows tables
 - Has country sorting
--
 
 ### Installation
 
-Dillinger requires Node.js and Electron
+Covid19-Stats requires Node.js and Electron
 
 To install dependencies, and dev dependencies
 
 ```sh
 $ cd coronaTracker
-$ npm install
-$ npm run serve -> Serves in browser
-$ npm run electron -> Serves in app
+$ npm install OR yarn
+$ npm run serve OR yarn run serve
+$ npm run electron OR yarn run electron
 ```
 
 To package app:
 
 ```sh
-$ npx electron-packager
+$ npm run dist
+$ OR
+$ yarn run dist
 ```
