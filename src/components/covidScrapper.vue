@@ -129,24 +129,24 @@ export default {
       }
       return {
         labels: [
+          list[1][0],
           list[2][0],
           list[3][0],
           list[4][0],
           list[5][0],
-          list[6][0],
-          list[7][0]
+          list[6][0]
         ],
         datasets: [
           {
             backgroundColor: background,
             hoverBorderColor: "rgba(0, 0, 0, 0.5)",
             data: [
+              list[1][type],
               list[2][type],
               list[3][type],
               list[4][type],
               list[5][type],
-              list[6][type],
-              list[7][type]
+              list[6][type]
             ]
           }
         ]
@@ -157,14 +157,16 @@ export default {
         axios.get(site).then(data => {
           const $ = cheerio.load(data.data);
           let list = [];
+          let currtext;
           $("table#main_table_countries_today>tbody>tr").each(
             (index, element) => {
-              list.push(
-                $(element)
-                  .find("td")
-                  .append("|")
-                  .text()
-              );
+              currtext = $(element)
+                .find("td")
+                .append("|")
+                .text();
+              if (currtext.indexOf("Total") < 0) {
+                list.push(currtext);
+              }
             }
           );
           resolve(list);
@@ -179,8 +181,15 @@ export default {
         e = e.replace(/([,+])/g, "");
         return e.split("|");
       });
-      list = list.sort((a, b) => b[1] - a[1]);
-      this.info = list;
+      this.info = list
+        .filter(
+          e =>
+            e[0].indexOf("Asia") < 0 &&
+            e[0].indexOf("Europe") < 0 &&
+            e[0].indexOf("North America") < 0 &&
+            e[0].indexOf("\n") < 0
+        )
+        .sort((a, b) => b[1] - a[1]);
     }
   }
 };
